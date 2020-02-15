@@ -1,0 +1,51 @@
+package nonlivingthngs;
+
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+
+import main.BasicObject;
+
+public class Leaf extends BasicObject{
+
+	public Leaf(float x, float y, float w, float h, float size) {
+		super(x, y, w, h, size);
+	}
+
+	@Override
+	protected void setColAttributes() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void draw(Graphics2D g2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(ArrayList<BasicObject> objList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void setShapeAttributes() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void setBoundingBox() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public AffineTransform getAffineTransform() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

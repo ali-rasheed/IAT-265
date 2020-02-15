@@ -1,0 +1,99 @@
+package main;
+
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.util.ArrayList;
+
+import processing.core.PVector;
+
+public abstract class BasicObject {
+
+	protected PVector pos;
+
+	protected float width, height;
+
+	protected float size;
+
+	protected Area boundingBox;
+
+
+	public BasicObject(float x, float y, float w, float h, float size) {
+
+		this.pos = new PVector(x, y);
+		this.setWidth(w);
+		this.setHeight(h);
+		this.size = size;
+		setShapeAttributes();
+		setColAttributes();
+		setBoundingBox();
+	}
+
+
+	protected abstract void setColAttributes();
+
+
+	public abstract void draw(Graphics2D g2);
+
+
+	public abstract void update(ArrayList<BasicObject> objList);
+
+
+	protected abstract void setShapeAttributes();
+
+
+	protected abstract void setBoundingBox();
+
+
+	public abstract AffineTransform getAffineTransform();
+
+
+	public float getSize() {
+
+		return size;
+	}
+
+
+	public PVector getPos() {
+
+		return pos;
+	}
+
+	public Shape getBoundary() {
+
+		return getAffineTransform().createTransformedShape(boundingBox);
+	}
+
+
+	protected boolean collides(BasicObject other) {
+
+		return (getBoundary().intersects(other.getBoundary().getBounds2D()) &&
+			other.getBoundary().intersects(getBoundary().getBounds2D()));
+	}
+
+
+	public float getWidth() {
+
+		return width;
+	}
+
+
+	public void setWidth(float width) {
+
+		this.width = width;
+	}
+
+
+	public float getHeight() {
+
+		return height;
+	}
+
+
+	public void setHeight(float height) {
+
+		this.height = height;
+	}
+
+}

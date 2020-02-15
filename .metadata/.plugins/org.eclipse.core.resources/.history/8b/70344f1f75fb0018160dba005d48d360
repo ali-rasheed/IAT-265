@@ -1,0 +1,14 @@
+package utility;
+
+import main.SkyPanel;
+
+public class MyLogger {
+
+	public static double getElapsedTime() {
+		long start = SkyPanel.startTime;
+		long curr = System.currentTimeMillis();
+		double elapsed = curr - start;
+		return elapsed = (elapsed / 10.0) * 10.0;
+
+	}
+}

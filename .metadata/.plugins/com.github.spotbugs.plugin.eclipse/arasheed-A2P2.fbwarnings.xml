@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="3.1.8" sequence="2" timestamp="1541835652035" analysisTimestamp="1541835651006" release="">
+  <Project projectName="arasheed-A2P2">
+    <Jar>E:\Megasync\SFU Courses\IAT 265\arasheed-A2P1\bin\BasicObject.class</Jar>
+    <AuxClasspathEntry>E:\Megasync\SFU Courses\IAT 265\arasheed-A2P1\bin</AuxClasspathEntry>
+    <AuxClasspathEntry>E:\Megasync\SFU Courses\IAT 265\arasheed-A2P1\core.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\Program Files\Java\jre1.8.0_191\lib\rt.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\Program Files\Java\jre1.8.0_191\lib\jce.jar</AuxClasspathEntry>
+    <SrcDir>E:\Megasync\SFU Courses\IAT 265\arasheed-A2P1\src</SrcDir>
+  </Project>
+  <BugInstance type="SS_SHOULD_BE_STATIC" priority="2" rank="18" abbrev="SS" category="PERFORMANCE" first="1">
+    <Class classname="BasicObject">
+      <SourceLine classname="BasicObject" sourcefile="BasicObject.java" sourcepath="BasicObject.java"/>
+    </Class>
+    <Field classname="BasicObject" name="PI" signature="D" isStatic="false">
+      <SourceLine classname="BasicObject" sourcefile="BasicObject.java" sourcepath="BasicObject.java"/>
+    </Field>
+    <SourceLine classname="BasicObject" start="19" end="19" startBytecode="8" endBytecode="8" sourcefile="BasicObject.java" sourcepath="BasicObject.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="BasicObject">
+      <SourceLine classname="BasicObject" sourcefile="BasicObject.java" sourcepath="BasicObject.java"/>
+    </Class>
+    <Field classname="BasicObject" name="scale" signature="D" isStatic="false">
+      <SourceLine classname="BasicObject" sourcefile="BasicObject.java" sourcepath="BasicObject.java"/>
+    </Field>
+    <SourceLine classname="BasicObject" start="34" end="34" startBytecode="31" endBytecode="31" sourcefile="BasicObject.java" sourcepath="BasicObject.java"/>
+  </BugInstance>
+  <BugInstance type="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="17" abbrev="UwF" category="STYLE" first="1">
+    <Class classname="BasicObject">
+      <SourceLine classname="BasicObject" sourcefile="BasicObject.java" sourcepath="BasicObject.java"/>
+    </Class>
+    <Field classname="BasicObject" name="bBox" signature="Ljava/awt/geom/Area;" isStatic="false">
+      <SourceLine classname="BasicObject" sourcefile="BasicObject.java" sourcepath="BasicObject.java"/>
+    </Field>
+    <SourceLine classname="BasicObject" start="55" end="55" startBytecode="5" endBytecode="5" sourcefile="BasicObject.java" sourcepath="BasicObject.java"/>
+  </BugInstance>
+  <Errors errors="0" missingClasses="0"></Errors>
+  <FindBugsSummary timestamp="Fri, 9 Nov 2018 23:29:38 -0800" total_classes="1" referenced_classes="15" total_bugs="3" total_size="38" num_packages="1" java_version="1.8.0_191" vm_version="25.191-b12" cpu_seconds="5.38" clock_seconds="1.03" peak_mbytes="616.29" alloc_mbytes="1024.00" gc_seconds="0.09" priority_2="3">
+    <PackageStats package="" total_bugs="3" total_types="1" total_size="38" priority_2="3">
+      <ClassStats class="BasicObject" sourceFile="BasicObject.java" interface="false" size="38" bugs="3" priority_2="3"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="436" invocations="332" avgMicrosecondsPerInvocation="1316" maxMicrosecondsPerInvocation="64222" standardDeviationMicrosecondsPerInvocation="4588"/>
+      <ClassProfile name="de.tobject.findbugs.builder.FindBugs2Eclipse" totalMilliseconds="177" invocations="2" avgMicrosecondsPerInvocation="88860" maxMicrosecondsPerInvocation="163707" standardDeviationMicrosecondsPerInvocation="74847"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="76" invocations="15" avgMicrosecondsPerInvocation="5089" maxMicrosecondsPerInvocation="30275" standardDeviationMicrosecondsPerInvocation="7946"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="53" invocations="332" avgMicrosecondsPerInvocation="161" maxMicrosecondsPerInvocation="5508" standardDeviationMicrosecondsPerInvocation="315"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="40" invocations="15" avgMicrosecondsPerInvocation="2694" maxMicrosecondsPerInvocation="12511" standardDeviationMicrosecondsPerInvocation="3783"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History>
+    <AppVersion sequence="0" timestamp="1541835648175" release="" codeSize="0" numClasses="0"/>
+    <AppVersion sequence="1" timestamp="1541835648179" release="" codeSize="38" numClasses="1"/>
+  </History>
+</BugCollection>

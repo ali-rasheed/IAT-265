@@ -1,0 +1,164 @@
+package main;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
+
+import animals.Animal;
+import animals.Bat;
+import animals.Owl;
+
+public class ControlPanel extends JPanel {
+
+	private static final long serialVersionUID = 2971317405783062396L;
+
+	private JLabel batNum, owlNum, fruitNum, fruitSize, selectedPos;;
+
+	private JTextField batNumField, owlNumField, fruitNumField;
+
+	private Container bottomSeg, topSeg, centSeg;
+
+	private JButton addBat, addOwl, increaseBatVel;
+
+	private JLabel selectedHealth;
+
+	private JLabel selectedType;
+
+	private JLabel selectedSize;
+
+	private JTextField selectedHealthField, selectedTypeField, selectedSizeField;
+
+	private JTextField selectedPosField;
+
+
+	// private JLabel statusLabel;
+
+	public ControlPanel() {
+
+		setComponentsAttributes();
+
+		this.setLayout(new BorderLayout());
+		// this.add(statusLabel, BorderLayout.SOUTH);
+		this.add(centSeg, BorderLayout.CENTER);
+		this.add(topSeg, BorderLayout.NORTH);
+		this.add(bottomSeg, BorderLayout.SOUTH);
+		this.setBorder(new TitledBorder("Control Panel"));
+	}
+
+
+	private void setComponentsAttributes() {
+
+		// top
+		batNum = new JLabel("Max Bats: ");
+		owlNum = new JLabel("Max Owls: ");
+		fruitNum = new JLabel("Max Fruits: ");
+		fruitSize = new JLabel("this fruits size: ");
+		selectedHealth = new JLabel("Size: ");
+		selectedType = new JLabel("Type: ");
+		selectedSize = new JLabel("Size: ");
+		selectedPos = new JLabel("Position: ");
+		// rpwNum = new JLabel("Royal Pacwoman: ");
+		// cpNum = new JLabel("Cannibal Pacman: ");
+		selectedHealthField = new JTextField(5);
+		selectedHealthField.setHorizontalAlignment(SwingConstants.CENTER);
+		selectedHealthField.setFocusable(false);
+		selectedPosField = new JTextField(5);
+		selectedPosField.setHorizontalAlignment(SwingConstants.CENTER);
+		selectedPosField.setFocusable(false);
+		selectedTypeField = new JTextField(5);
+		selectedTypeField.setHorizontalAlignment(SwingConstants.CENTER);
+		selectedTypeField.setFocusable(false);
+		selectedSizeField = new JTextField(5);
+		selectedSizeField.setHorizontalAlignment(SwingConstants.CENTER);
+		selectedSizeField.setFocusable(false);
+		batNumField = new JTextField(5);
+		batNumField.setHorizontalAlignment(SwingConstants.CENTER);
+		batNumField.setFocusable(false);
+		owlNumField = new JTextField(5);
+		owlNumField.setHorizontalAlignment(SwingConstants.CENTER);
+		owlNumField.setFocusable(false);
+		// cent
+		centSeg = new Container();
+		centSeg.setLayout(new FlowLayout(FlowLayout.LEADING, 12, 5));
+		// rightSeg.add(statusLabel);
+		centSeg.setBackground(Color.DARK_GRAY);
+		centSeg.add(selectedHealth);
+		centSeg.add(selectedHealthField);
+		centSeg.add(selectedPos);
+		centSeg.add(selectedPosField);
+		centSeg.add(selectedSize);
+		centSeg.add(selectedSizeField);
+		centSeg.add(selectedType);
+		centSeg.add(selectedTypeField);
+		// top
+		topSeg = new Container();
+		topSeg.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		topSeg.add(Box.createHorizontalStrut(2));
+		topSeg.add(batNum);
+		topSeg.add(batNumField);
+		topSeg.add(owlNum);
+		topSeg.add(owlNumField);
+		addBat = new JButton("Add Bat");
+		addBat.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				SkyPanel.addBat();
+			}
+		});
+		addOwl = new JButton("Add Owl");
+		addOwl.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				SkyPanel.addOwl();
+			}
+		});
+
+		bottomSeg = new Container();
+		bottomSeg.setLayout(new FlowLayout(FlowLayout.LEADING));
+		bottomSeg.add(addBat);
+		bottomSeg.add(addOwl);
+		// top.add(addRoyalPacwoman);
+		// top.add(addCannibalPacman);
+
+		// bottom
+		// statusLabel = new JLabel("Status");
+	}
+
+
+	public void update(SkyPanel p, Animal selected) {
+
+		// statusLabel.setText(p.getStatus());
+		if (selected != null) {
+			System.out.println("abc");
+			selectedHealthField.setText(String.valueOf(selected.getEnergy()));
+			selectedTypeField.setText(String.valueOf(selected.getClass()));
+			selectedPosField.setText(String.valueOf(selected.getSize()));
+			selectedSizeField.setText(String.valueOf(selected.getPos()));
+		}
+		batNumField.setText(
+			String.format("%d / %d", p.countObject(Bat.class), p.countTotalObj(Bat.class)));
+		owlNumField.setText(
+			String.format("%d / %d", p.countObject(Owl.class), p.countTotalObj(Owl.class)));
+
+		// rpwNumField.setText(String.format("%d / %d", p.countObject(RoyalPacwoman.class),
+		// p.countTotalObj(RoyalPacwoman.class)));
+		// cpNumField.setText(String.format("%d / %d", p.countObject(CannibalPacman.class),
+		// p.countTotalObj(CannibalPacman.class)));
+	}
+
+}

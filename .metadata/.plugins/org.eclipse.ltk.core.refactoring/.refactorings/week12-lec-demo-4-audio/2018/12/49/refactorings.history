@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;sound&apos; to &apos;arasheed-A4P1/src&apos;&#x0D;&#x0A;- Original project: &apos;week12-lec-demo-4-audio&apos;&#x0D;&#x0A;- Destination element: &apos;arasheed-A4P1/src&apos;&#x0D;&#x0A;- Original element: &apos;week12-lec-demo-4-audio/src/sound&apos;" description="Copy package" destination="=arasheed-A4P1/src" element1="/src&lt;sound" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1544251949127" version="1.0"/>
+</session>

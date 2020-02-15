@@ -1,0 +1,52 @@
+package main;
+
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
+import javax.swing.JFrame;
+
+public class SkyApp extends JFrame {
+
+	private static final long serialVersionUID = -7809931283443048948L;
+
+
+	public SkyApp(String title) {
+
+		super(title);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		ControlPanel cPanel = new ControlPanel();
+		SkyPanel skyPanel = new SkyPanel(cPanel);
+
+		Container contentPane = getContentPane();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setLayout(new GridBagLayout());
+GridBagConstraints c = new GridBagConstraints();
+c.weightx = 0;
+c.weighty = 0;
+c.gridx = 0;
+c.gridy = 0;
+
+contentPane.add(skyPanel, c);
+c.gridx = 1;
+//c.weighty = 1;
+
+		contentPane.add(cPanel, c);
+
+
+		this.pack();
+		// displaying the frame
+		this.setVisible(true);
+	}
+
+
+	public static void main(String[] args) {
+
+		new SkyApp("Night Sky");
+	}
+
+}

@@ -1,0 +1,194 @@
+import java.awt.Color;
+
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.geom.Point2D;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+//import org.w3c.dom.events.MouseEvent;
+import java.awt.event.MouseEvent;
+
+import processing.core.PVector;
+
+public class SkyPan extends JPanel implements ActionListener {
+    private Timer t;
+    private ArrayList<Fruit> fSources;
+    private ArrayList<Bat> campOf;
+    private float timePrsd;
+    private Thread msCalcThread;
+    private MouseTimeThread msPressedCalculator;
+    private boolean clicked;
+
+    public SkyPan(Dimension initialSize) {
+	super();
+	setBackground(Color.BLACK);
+//---------------instantiation----------//
+	fSources = new ArrayList<Fruit>();
+	campOf = new ArrayList<Bat>();
+
+	int r = (int) (Math.random() * 360);
+	MyMouseAdapter myMsLsner = new MyMouseAdapter();
+	addMouseListener(myMsLsner);
+	t = new Timer(33, this);
+	t.addActionListener(this);
+	t.start();
+	while (campOf.size() < 2) {
+	    campOf.add(new Bat(new PVector(initialSize.width / 2, initialSize.height / 2), fSources));
+	}
+
+	clicked = false;
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+	super.paintComponent(g);
+	Graphics2D g2 = (Graphics2D) g;
+	setBackground(Color.BLACK);
+	g2.setBackground(Color.BLACK);
+	for (Bat bat : campOf) {
+	    bat.draw(g2);
+	}
+	for (Fruit f : fSources) {
+	    f.draw(g2);
+	}
+    }
+
+    public void createFood(MouseEvent e) {
+	PVector currMsPos = new PVector(e.getX(), e.getY());
+	fSources.add(new Fruit(currMsPos));
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+	for (Bat bat : campOf) {
+
+	    if (bat.XWallColl(getSize())) {
+		bat.changeX();
+	    }
+	    if (bat.XWallColl(getSize())) {
+		bat.changeY();
+	    }
+	    bat.move(fSources);
+
+	}
+	for (Fruit food : fSources) {
+	    food.checkStatus();
+	    repaint();
+	}
+	eatenFood();
+//	while(clicked) {
+//		Fruit closest = fSources.get(0);
+//		for (Fruit f : fSources) {
+//		    if (PVector.dist(f.getPos(), this.pos) < PVector.dist(closest.getPos(), this.pos)) {
+//			closest = f;
+//	}
+
+    }
+
+    public void eatenFood() {
+	for (int i = 0; i < campOf.size(); i++) {
+	    for (int j = 0; j < fSources.size(); j++) {
+		Bat bat = campOf.get(i);
+		Fruit food = fSources.get(j);
+		if (bat.getPos().dist(food.getPos()) < bat.getHeight() / 2 + food.getSize() / 2) {
+		    fSources.remove(food);
+		}
+	    }
+	}
+    }
+
+//-----------------MOUSE ADAPTER--------------------//
+
+    private class MyMouseAdapter extends MouseAdapter {
+
+	/*
+	 * private boolean foodClicked(MouseEvent e) { for (int i = 0; i <
+	 * fSources.size(); i++) { if (fSources.get(i).msClickCheck(e) {
+	 * 
+	 * for (Fruit f : fSources) { if (Point2D.distance(e.getX(), e.getY(),
+	 * f.getPos().x, f.getPos().y) < f.getSize().x) { break; } else { return false;
+	 * } } return true; }
+	 */
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	    super.mousePressed(e);
+	    for (int i = 0; i < fSources.size(); i++) {
+		if (fSources.get(i).msClickCheck(e)) {
+		    msPressedCalculator = new MouseTimeThread();
+		    msCalcThread = new Thread(msPressedCalculator);
+		    msCalcThread.start();
+		}
+	    }
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	    super.mouseReleased(e);
+	    if (foodClicked(e) && fSources.size() > 0) {
+		msCalcThread.interrupt();
+		timePrsd = msPressedCalculator.getTimeElapsed() / 20;
+		System.out.println(timePrsd);
+		clicked = true;
+		System.out.println("close to food");
+		while (clicked) {
+		    Fruit closest = fSources.get(0);
+		    double Xc = closest.getPos().x;
+		    double Yc = closest.getPos().y;
+		    for (Fruit f : fSources) {
+			double X = f.getPos().x;
+			double Y = f.getPos().y;
+			if (Point2D.distance(e.getX(), e.getY(), X, Y) < Point2D.distance(e.getX(), e.getY(), Xc, Yc)) {
+			    closest = f;
+			}
+
+		    }
+		    closest.setSize(timePrsd);
+		    clicked = false;
+		}
+	    } else {
+		System.out.println("not close to food");
+		createFood(e);
+	    }
+
+	}
+    }
+
+    private class MyMouseMotionListener extends MouseMotionAdapter {
+    }
+
+//_------------------MOUSE COUNTER--------//
+    public class MouseTimeThread implements Runnable {
+	int timeElapsed = 0;
+
+	public int getTimeElapsed() {
+	    return timeElapsed;
+	}
+
+	@Override
+	public void run() {
+	    while (true) {
+		try {
+		    Thread.sleep(1);
+		    timeElapsed += 1;
+		} catch (InterruptedException ex) {
+		    break;
+		}
+	    }
+	}
+    }
+}

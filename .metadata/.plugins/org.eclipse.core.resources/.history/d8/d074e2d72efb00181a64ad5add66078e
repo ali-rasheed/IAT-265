@@ -1,0 +1,11 @@
+package nonlivingthngs;
+
+import main.BasicObject;
+
+public class Leaf extends BasicObject{
+
+	public Leaf(float x, float y, float w, float h, float size) {
+		super(x, y, w, h, size);
+	}
+
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="E:\Megasync\SFU Courses\IAT 265\week09-lab-cannibalPacman-final"/>
+		<item value="E:\Megasync\SFU Courses\IAT 265\week08-lab-oop-text-full.zip"/>
+	</list>
+	<section name="CleanDialogSettings">
+		<item value="662" key="DIALOG_WIDTH"/>
+		<item value="false" key="TOGGLE_SELECTED"/>
+		<item value="452" key="DIALOG_HEIGHT"/>
+		<item value="629" key="DIALOG_X_ORIGIN"/>
+		<item value="239" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="ExternalProjectImportWizard">
+		<item value="true" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
+		<item value="true" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+		<item value="true" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="E:\Megasync\SFU Courses\IAT 265 Multimedia Programming for Art and Design\265 Eclipse Workspace\week02-lab-ballapp-final\week02-lab-ballapp-demo2"/>
+			<item value="E:\Megasync\SFU Courses\IAT 265\Week11-Tutorial-basecode"/>
+			<item value="E:\Megasync\SFU Courses\IAT 265\week07-lab-smartpw-full"/>
+			<item value="E:\Megasync\SFU Courses\IAT 265\week05-lab-pacwoman"/>
+			<item value="E:\Megasync\SFU Courses\IAT 265\week06-lab-pacwoman-wallCollision"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value="C:\Users\alias\Desktop\week06-lab-pacwoman-full.ZIP"/>
+			<item value=""/>
+		</list>
+	</section>
+	<section name="ResourceNavigator">
+		<item value="Aggregate for window 1540167376224" key="ResourceWorkingSetFilter.STORE_WORKING_SET"/>
+		<item value="1" key="ResourceViewer.STORE_SORT_TYPE"/>
+	</section>
+	<section name="org.eclipse.ui.internal.ide.dialogs.ProjectContentsLocationArea">
+		<item value="E:\Megasync\SFU Courses\IAT 265" key="OUTSIDE_LOCATION"/>
+	</section>
+	<section name="SaveAsDialogSettings">
+		<item value="700" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="645" key="DIALOG_HEIGHT"/>
+		<item value="619" key="DIALOG_X_ORIGIN"/>
+		<item value="119" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

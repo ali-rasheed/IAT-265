@@ -1,0 +1,89 @@
+package nonlivingthngs;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.util.ArrayList;
+
+import main.BasicObject;
+
+public class Fruit extends BasicObject {
+
+	// private Ellipse2D.Double foodShape;
+	private Polygon mainBody;
+
+	private Color foodColor; // shape color
+
+
+	public Fruit(float x, float y, float size) {
+
+		super(x, y, 10, 10, size);
+	}
+
+
+	@Override
+	public void draw(Graphics2D g) {
+
+		AffineTransform at = getAffineTransform();
+
+//		g.translate(pos.x, pos.y);
+		// g.rotate(Math.PI/2);
+//		g.scale(size, size);
+
+		// draw food
+		g.setColor(foodColor);
+		// g.fill(foodShape);
+		g.fill(mainBody);
+		// g.draw(boundingBox);
+		g.setTransform(at);
+	}
+
+
+	@Override
+	protected void setShapeAttributes() {
+
+		// this.foodShape = new Ellipse2D.Double(-width/2, -height/2, width, height);
+		this.mainBody = new Polygon();
+		for (int i = 0; i < 10; i++) {
+			mainBody.addPoint((int) (+1.5 * getWidth() / 3 * Math.cos(i * 2 * Math.PI / 10)),
+				(int) (+getWidth() / 1.5 * Math.sin(i * 2 * Math.PI / 10)));
+		}
+	}
+
+
+	@Override
+	protected void setBoundingBox() {
+
+		boundingBox = new Area(mainBody);
+		// boundingBox.add(new Area(mainBody));
+	}
+
+
+	@Override
+	public AffineTransform getAffineTransform() {
+
+		AffineTransform at = new AffineTransform();
+		at.translate(pos.x, pos.y);
+		// at.rotate(Math.PI/2);
+		at.scale(size, size);
+		return at;
+	}
+
+
+	@Override
+	public void update(ArrayList<BasicObject> objList) {
+
+		// nothing, food don't need to be updated
+	}
+
+
+	@Override
+	protected void setColAttributes() {
+
+		this.foodColor = Color.RED;
+		
+	}
+
+}

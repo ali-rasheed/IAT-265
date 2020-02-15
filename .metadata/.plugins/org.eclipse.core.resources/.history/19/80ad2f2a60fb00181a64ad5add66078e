@@ -1,0 +1,142 @@
+package utility;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+
+import animals.Bat;
+import animals.Owl;
+import main.BasicObject;
+import nonliving.Fruit;
+import processing.core.PVector;
+
+public class Util {
+
+	final static private double EPSILON = 1e-12;
+
+
+
+	 public static Color randomColor() {
+
+		int r = (int) random(255);
+		int g = (int) random(255);
+		int b = (int) random(255);
+
+		return new Color(r, g, b);
+	}
+
+	public static PVector randomPVector(int maxX, int maxY) {
+
+		return new PVector((float) random(maxX), (float) random(maxY));
+	}
+
+	public static PVector randomPVector(float magnitude) {
+
+		return PVector.random2D().mult(magnitude);
+	}
+
+	public static Fruit randomFood(Dimension pnlSize) {
+
+		return new Fruit(Util.random(50, pnlSize.width - 50),
+				Util.random(50, pnlSize.height - 50),
+				Util.random(1, 4));
+	}
+
+	public static Bat randomBat(Dimension pnlSize, int min, int max) {
+
+		return new Bat(Util.random(-50,120),
+				Util.random(-500,120), Util.random(min, max));
+//		return new Bat(Util.random(100, pnlSize.width - 100),
+//				Util.random(100, pnlSize.height - 100), Util.random(3, 5));
+	}
+
+	public static Owl randomOwl(Dimension pnlSize, int min, int max) {
+
+		return new Owl(Util.random(100, pnlSize.width - 100),
+				Util.random(100, pnlSize.height - 100), Util.random(min, max));
+	}
+
+	public static int countObject(Class<?> className, ArrayList<BasicObject> objList) {
+
+		int i = 0;
+		for (BasicObject obj : objList)
+			if (className.isInstance(obj))
+				i++;
+		return i;
+	}
+
+	public static Ellipse2D.Double centEllipse(double x, double y, double width,
+			double height) {
+
+		double newX = x - width / 2.0;
+		double newY = y - height / 2.0;
+		Ellipse2D.Double ellipse = new Ellipse2D.Double(newX, newY, width,
+				height);
+		return ellipse;
+	}
+
+	public static Arc2D.Double centPie(double x, double y, double width,
+			double height,
+			double initialAng, double finalAng) {
+
+		double newX = x - width / 2.0;
+		double newY = y - height / 2.0;
+		Arc2D.Double arc = new Arc2D.Double(newX, newY, width, height,
+				initialAng, finalAng,
+				Arc2D.PIE);
+		return arc;
+	}
+
+	public static Rectangle2D.Double centRect(double x, double y, double width,
+			double height) {
+
+		double newX = x - width / 2.0;
+		double newY = y - height / 2.0;
+		Rectangle2D.Double rect = new Rectangle2D.Double(newX, newY, width,
+				height);
+		return rect;
+	}
+
+	public static Color HSB(int hue, int sat, int bri) {
+
+		float propSat = sat / 100;
+		float propBri = bri / 100;
+		Color c = Color.getHSBColor(hue, propSat, propBri);
+		return c;
+	}
+
+	public static double map(double valueCoord1, double startCoord1,
+			double endCoord1,
+			double startCoord2,
+			double endCoord2) {
+
+		if (Math.abs(endCoord1 - startCoord1) < EPSILON) {
+			throw new ArithmeticException("/ 0");
+		}
+
+		double offset = startCoord2;
+		double ratio = (endCoord2 - startCoord2) / (endCoord1 - startCoord1);
+		return ratio * (valueCoord1 - startCoord1) + offset;
+	}
+
+	public static float random(double max) {
+
+		return (float) (Math.random() * max);
+	}
+
+	public static float random(double min, double max) {
+
+		return (float) (Math.random() * (max - min) + min);
+	}
+
+	public static Color rgb(int i, int j, int k) {
+
+		Color col = new Color(i, j, k);
+		return col;
+	}
+	
+
+}

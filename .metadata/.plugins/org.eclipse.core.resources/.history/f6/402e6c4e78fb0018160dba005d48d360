@@ -1,0 +1,291 @@
+package main;
+
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+import animals.Animal;
+import animals.Bat;
+import animals.Owl;
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
+import nonliving.Fruit;
+import nonliving.Leaf;
+import utility.MinimHelper;
+import utility.MyLogger;
+//import utility.MyLogger;
+import utility.Util;
+
+public class SkyPanel extends JPanel implements ActionListener {
+
+	private static final long serialVersionUID = -826854413678686523L;
+
+	private static final int MAX_LEAVES = 2;
+
+	private static final int MAX_ROTTENFRUIT = 2;
+
+	private static ArrayList<BasicObject> objList;
+
+	private static ArrayList<BasicObject> obstacleList;
+
+	private Timer t;
+
+	private static Dimension pnlSize;
+
+	private static int MAX_FRUIT = 4;
+
+	public static double MAX_BAT_SIZE = 2, MIN_BAT_SIZE = 0.5, MAX_OWL_SIZE = 3, MIN_OWL_SIZE = 1.5;
+
+	private static int MIN_PER_KIND = 7;
+
+	private static int batCount = 0;
+
+	private static int owlCount = 0;
+
+	private int fruitCount = 0;
+
+	private int rottenFruitCount = 0;
+
+	private int leafCount = 0;
+
+	private static String status = "Status";
+
+	private ControlPanel cPanel;
+
+	private SkyApp sApp;
+
+	private Animal selected;
+
+	private Image bgImage;
+
+	private Minim minim;
+
+	private static AudioPlayer eatingSound, bouncingSound;
+	
+	public final static long startTime = System.currentTimeMillis();
+	
+
+	public SkyPanel(SkyApp sa, ControlPanel p) {
+
+		super();
+		selected = null;
+		cPanel = p;
+		sApp = sa;
+		pnlSize = new Dimension(1200, 1000); // set panel sizes
+
+		this.setPreferredSize(pnlSize);
+//		this.setMaximumSize(pnlSize);
+		// create new animals
+		objList = new ArrayList<>();
+		obstacleList = new ArrayList<>();
+	    FileHandler fh;  
+
+		for (int i = 0; i < MAX_FRUIT; i++)
+			objList.add(Util.randomFood(pnlSize));
+		while (batCount < MIN_PER_KIND)
+			addBat();
+		while (owlCount < MIN_PER_KIND)
+			addOwl();
+		while (MAX_LEAVES > leafCount) {
+			leafCount++;
+			objList.add(new Leaf(pnlSize.width / 2, pnlSize.height / 2, 5, 10, 2));
+		}
+		while (MAX_ROTTENFRUIT > leafCount) {
+			rottenFruitCount++;
+//			objList.add(new Leaf(pnlSize.width / 2, pnlSize.height / 2, 5, 10, 2));
+		}
+		t = new Timer(33, this); // timer and listener
+
+		t.start();
+		this.addKeyListener(new MyKeyAdapter());
+		this.addMouseListener(new MyMouseAdapter());
+		this.setFocusable(true);
+
+		minim = new Minim(new MinimHelper()); // SOUND
+		eatingSound = minim.loadFile("eatingSound.mp3");
+		try {
+			bouncingSound = minim.loadFile("bouncingSound.mp3");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		// Background definition
+
+		try {
+			bgImage = Toolkit.getDefaultToolkit().createImage("assets/sky_background.gif");
+
+		} catch (Exception e) {
+			System.out.println();
+		}
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		for (int i = 0; i < objList.size(); i++) {
+			BasicObject b = objList.get(i);
+			b.update(objList);
+
+		if (b instanceof Animal)
+				for (BasicObject bo : objList)
+					if (!(bo instanceof Animal) && bo != b) {
+//						System.out.println(MyLogger.getElapsedTime());
+						((Animal) b).obstacleAvoid(b, pnlSize);
+					}
+			if (b.getPos().x > pnlSize.width || b.getPos().x < 0 || b.getPos().y > pnlSize.height
+					|| b.getPos().y < 0) {
+				animal out of bound
+				objList.remove(b);
+			}
+
+			respawn();
+			repaint();
+		}
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+
+		super.paintComponent(g);
+//		setBackground(Color.darkGray);
+		g.drawImage(bgImage, 0, 0, pnlSize.width, pnlSize.height, this);
+
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+
+		// draw objects
+		for (BasicObject obj : objList)
+			obj.draw(g2);
+
+		// update panel
+		cPanel.update(this, selected);
+	}
+
+	private void respawn() {
+
+		while (countObject(Fruit.class) < MAX_FRUIT)
+			objList.add(Util.randomFood(pnlSize));
+		fruitCount++;
+		while (countObject(Bat.class) < MIN_PER_KIND)
+			addBat();
+		while (countObject(Owl.class) < MIN_PER_KIND - 1)
+			addOwl();
+	}
+
+	public static void setStatus(String st) {
+
+		status = st;
+	}
+
+	public String getStatus() {
+
+		return status;
+	}
+
+	// Bonus point the "c" key switches the visibility on and off
+
+	public int countObject(Class<?> className) {
+
+		if (className == Bat.class)
+			return Util.countObject(className, objList);
+		if (className == Owl.class)
+			return Util.countObject(className, objList);
+		return Util.countObject(className, objList);
+	}
+
+	public int countTotalObj(Class<?> className) {
+		if (className == Fruit.class)
+			return fruitCount;
+		if (className == Bat.class)
+			return batCount;
+		if (className == Owl.class)
+			return owlCount;
+		return -1;
+	}
+
+	public static void addBat() {
+
+		objList.add(Util.randomBat(pnlSize, MIN_BAT_SIZE, MAX_BAT_SIZE));
+		batCount++;
+	}
+
+	public static void addOwl() {
+
+		objList.add(Util.randomOwl(pnlSize, MIN_OWL_SIZE, MAX_OWL_SIZE));
+		owlCount++;
+	}
+
+
+	private class MyMouseAdapter extends MouseAdapter {
+
+		public void mousePressed(MouseEvent e) {
+			super.mousePressed(e);
+			System.out.println("out");
+
+			for (BasicObject b : objList)
+				if (b instanceof Bat || b instanceof Owl)
+					if (java.awt.geom.Point2D.distance(e.getX(), e.getY(),
+							b.getPos().x, b.getPos().y) < b.getWidth()) {
+						b = selected;
+						System.out.println("out2");
+					}
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			super.mouseReleased(e);
+		}
+	}
+
+
+	public class MyKeyAdapter extends KeyAdapter {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+
+			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+				if (t.isRunning())
+					t.stop();
+				else
+					t.start();
+			}
+			if (e.getKeyCode() == KeyEvent.VK_C && cPanel.isVisible()) {
+				cPanel.setVisible(false);
+				sApp.pack();
+			} else {
+				cPanel.setVisible(true);
+				sApp.pack();
+
+			}
+		}
+	}
+
+	public static void playEatSound() {
+		if (eatingSound != null) {
+
+		eatingSound.rewind();
+		eatingSound.play();}
+	}
+
+	public static void playBounceSound() {
+		if (bouncingSound != null) {
+			bouncingSound.rewind();
+			bouncingSound.play();
+		}
+	}
+}

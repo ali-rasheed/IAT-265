@@ -1,0 +1,7 @@
+package nonlivingthngs;
+
+import main.BasicObject;
+
+public class leaf extends BasicObject{
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 7 elements to &apos;arasheed-A4P1&apos;&#x0D;&#x0A;- Original project: &apos;week06-lab-pacwoman-basecode&apos;&#x0D;&#x0A;- Destination element: &apos;arasheed-A4P1&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     jl1.0.1.jar&#x0D;&#x0A;     core.jar&#x0D;&#x0A;     jsminim.jar&#x0D;&#x0A;     tritonus_share.jar&#x0D;&#x0A;     minim.jar&#x0D;&#x0A;     mp3spi1.9.5.jar&#x0D;&#x0A;     tritonus_aos.jar" description="Copy files" destination="=arasheed-A4P1" element1="jl1.0.1.jar" element2="core.jar" element3="jsminim.jar" element4="tritonus_share.jar" element5="minim.jar" element6="mp3spi1.9.5.jar" element7="tritonus_aos.jar" files="7" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1544330089355" units="0" version="1.0"/>
+</session>

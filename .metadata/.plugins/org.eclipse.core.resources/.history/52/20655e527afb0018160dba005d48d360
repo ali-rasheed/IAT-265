@@ -1,0 +1,67 @@
+package utility;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.logging.*;
+
+import animals.Animal;
+import animals.Bat;
+import animals.Owl;
+import main.SkyPanel;
+
+public class MyLogger {
+
+	private final Logger logger = Logger.getLogger(MyLogger.class.getName());
+
+	private FileHandler fh = null;
+
+	public MyLogger() {
+		SimpleDateFormat format = new SimpleDateFormat("M-d_HHmmss");
+		try {
+			fh = new FileHandler("logfile"
+					+ format.format(Calendar.getInstance().getTime()) + ".txt");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		fh.setFormatter(new SimpleFormatter());
+		logger.addHandler(fh);
+	}
+
+	public void log(String s) {
+		logger.info(s);
+	}
+
+	public void log(String s, Bat a) {
+		logger.info("Bat " + a.idNumber + ": " + s);
+	}
+
+	public void log(String s, Object a) {
+
+		logger.info(a.getClass() + " " + Math.round(Util.random(20)) + ": " + s);
+	}
+
+	public void logParameter(String s, Bat a) {
+		logger.info("Bat " + a.idNumber + ": Size " + a.getSize() + ", Position " + a.getPos()
+				+ ", Energy " + a.getEnergy());
+	}
+
+	public void log(String s, Owl a) {
+		logger.info("Owl " + a.idNumber + ": " + s);
+	}
+
+	public void logParameter(String s, Owl a) {
+		logger.info("Owl " + a.idNumber + ": Size " + a.getSize() + ", Position " + a.getPos()
+				+ ", Energy " + a.getEnergy());
+	}
+//	public void log(String s, Fruit a) {
+//        logger.info(a.idNumber +ids);}
+
+	public static double getElapsedTime() {
+		long start = SkyPanel.startTime;
+		long curr = System.currentTimeMillis();
+		double elapsed = (curr - start) / 1000;
+		return elapsed = (elapsed / 10.0) * 10.0;
+
+	}
+}

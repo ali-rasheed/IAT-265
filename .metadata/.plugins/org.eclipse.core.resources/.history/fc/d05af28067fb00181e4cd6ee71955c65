@@ -1,0 +1,21 @@
+package utility;
+
+public class Logger {
+
+	public double getSystemTime() {
+		   long start = System.currentTimeMillis();
+
+//		    Thread.sleep(2000);
+
+		    // Get elapsed time in milliseconds
+		    long elapsedTimeMillis = System.currentTimeMillis() - start;
+		    // 
+		    float elapsedTimeSec = elapsedTimeMillis/1000F;
+		  return  Math.round( elapsedTimeSec* 10.0) / 10.0;
+
+	}
+
+	static public void writeHungerDeath() {
+
+	}
+}
